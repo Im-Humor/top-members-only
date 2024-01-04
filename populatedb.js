@@ -3,12 +3,6 @@ const app = express();
 require("dotenv").config();
 const mongoose = require("mongoose");
 
-//set view engine
-app.set("views", "./views");
-app.set("view engine", "ejs");
-
-app.use(express.static("public"));
-
 //connect to database
 async function main() {
 	await mongoose.connect(
@@ -19,10 +13,26 @@ async function main() {
 
 main().catch((err) => console.log(err));
 
-//import routers
-const index = require("./routes/index");
+//import models
+const User = require("./models/user");
+const Post = require("./models/post");
 
-app.use("/", index);
+async function addUsers() {
+	try {
+		console.log("adding user");
+		await User.insertMany([
+			{
+				first_name: "Daniel",
+				last_name: "Morris",
+				email: "orangite@gmail.com",
+				password: "poop",
+				membership: true,
+			},
+		]);
+		console.log("User added");
+	} catch (error) {
+		console.log(error);
+	}
+}
 
-//start server
-app.listen(3000);
+addUsers();
