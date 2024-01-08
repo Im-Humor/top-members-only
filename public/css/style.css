@@ -2,6 +2,8 @@ html, body {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    height: 100%;
+    width: 100%;
 }
 
 body * {
@@ -27,4 +29,14 @@ header {
 .main-content {
     grid-column: 2 / 3;
     grid-row: 2 / 3;
+}
+
+.signup-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.join-form {
+    display: flex;
+    flex-direction: column;
 }

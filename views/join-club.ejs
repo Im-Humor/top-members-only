@@ -1,0 +1,23 @@
+<%- include("header"); -%>
+
+<div class="join-container">
+    <h2 class="join-header">Join the club!</h2>
+    <p>Enter your email and the membership code to activate your membership.</p>
+
+    <% if (!currentUser) { %>
+        <p>Please log in</p>
+    <% } else if (currentUser.membership == true) { %>
+        <p>You are already a member!</p>
+    <% } else { %>
+        <p>You are not a member, please upgrade your membership below.</p>
+            <form action="" class="join-form" method="post">
+                <label for="join_code">Membership code:</label>
+                <input type="text" id="join_code" name="join_code">
+                <button>Submit</button>
+            </form>
+    <% } %>
+
+
+</div>
+
+<%- include("footer"); -%>

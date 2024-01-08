@@ -2,6 +2,21 @@
 
 <div class="welcome-container">
     <h2>Welcome to our members only message board</h2>
+
+    <h4 class="signup-header">Not registered? Sign up below</h4>
+    <form action="/" method="post" class="signup-form">
+        <label for="first_name">First name:</label>
+        <input type="text" id="first_name" name="first_name">
+        <label for="last_name">Last name:</label>
+        <input type="text" id="last_name" name="last_name">
+        <label for="email">Email:</label>
+        <input type="text" id="email" name="email">
+        <label for="password">Password:</label>
+        <input type="text" id="password" name="password">
+        <label for="confirm_password">Confirm password:</label>
+        <input type="text" id="confirm_password" name="confirm_password">
+        <button>Create User</button>
+    </form>
 </div>
 
 <%- include("footer"); -%>

@@ -3,5 +3,16 @@
         <li class="navbar-item">
             <a href="/">Home</a>
         </li>
+        <li class="navbar-item">
+            <a href="/login">Login</a>
+        </li>
+        <li class="navbar-item">
+            <a href="/join-club">Upgrade Membership</a>
+        </li>
+        <% if (currentUser) { %>
+        <li class="navbar-item">
+            <a href="/account">Account</a>
+        </li>
+        <% } %>
     </ul>
 </div>
