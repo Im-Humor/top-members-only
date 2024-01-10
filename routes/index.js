@@ -52,8 +52,13 @@ router.post("/", createUserValidator, (req, res) => {
 	}
 });
 
-router.get("/", (req, res) => {
-	res.render("index", { title: "Homepage" });
+router.get("/", async (req, res) => {
+	const posts = await Post.find({}).sort({ date: -1 });
+	for (let post of posts) {
+		const author = await User.findById(post.author);
+		post.author = author;
+	}
+	res.render("index", { title: "Homepage", posts: posts });
 });
 
 router.get("/login", (req, res) => {
@@ -101,6 +106,54 @@ router.get("/logout", (req, res, next) => {
 		}
 		res.redirect("/");
 	});
+});
+
+router.get("/new-post", (req, res) => {
+	res.render("new-post", { title: "Create Post" });
+});
+
+router.post("/new-post", async (req, res) => {
+	const user = await User.findOne({ email: req.user.email });
+	if (user) {
+		try {
+			await Post.create({
+				title: req.body.title,
+				content: req.body.content,
+				author: user._id,
+			});
+			res.redirect("/");
+		} catch (err) {
+			console.log(err);
+			res.redirect("/new-post");
+		}
+	}
+});
+
+router.get("/post/:postID/delete", async (req, res) => {
+	if (req.user) {
+		try {
+			await Post.deleteOne({ _id: req.params.postID });
+			res.redirect("/");
+		} catch (err) {
+			console.log(err);
+			res.redirect("/");
+		}
+	} else {
+		console.log("Please log in");
+		res.redirect("/");
+	}
+});
+
+router.post("/upgrade-admin", async (req, res) => {
+	if (req.user && req.body.adminCode == "1337") {
+		try {
+			await User.updateOne({ _id: req.user._id }, { admin: true });
+			res.redirect("/");
+		} catch (err) {
+			console.log(err);
+			res.redirect("/");
+		}
+	}
 });
 
 module.exports = router;

@@ -8,6 +8,13 @@
         <p>Please log in</p>
     <% } else if (currentUser.membership == true) { %>
         <p>You are already a member!</p>
+        <% if (!currentUser.admin) {%>
+            <form action="/upgrade-admin" method="post" class="admin-form">
+                <label for="adminCode">Admin code:</label>
+                <input type="text" id="adminCode" name="adminCode">
+                <button>Submit</button>
+            </form>
+            <% } %>
     <% } else { %>
         <p>You are not a member, please upgrade your membership below.</p>
             <form action="" class="join-form" method="post">

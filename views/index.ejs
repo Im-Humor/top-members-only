@@ -3,6 +3,7 @@
 <div class="welcome-container">
     <h2>Welcome to our members only message board</h2>
 
+    <% if (!currentUser) { %>
     <h4 class="signup-header">Not registered? Sign up below</h4>
     <form action="/" method="post" class="signup-form">
         <label for="first_name">First name:</label>
@@ -17,6 +18,35 @@
         <input type="text" id="confirm_password" name="confirm_password">
         <button>Create User</button>
     </form>
+    <% } %>
+
+    <% if (currentUser && currentUser.membership == true) { %>
+        <ul class="post-list">
+        <% posts.forEach(post => { %>
+            <li class="post-list-item">
+                <p>Post title: <%= post.title %></p>
+                <p>Post date: <%= post.date %></p>
+                <p>Post author: <%= post.author.first_name + " " + post.author.last_name %></p>
+                <p>Post: <%= post.content %></p>
+                <% if (currentUser.admin == true) { %>
+                <a href=<%=`/post/${post._id}/delete` %>>Delete Post</a>
+                <% } %>
+            </li>
+        <% }); %>
+        </ul>
+        <% } else if (currentUser && currentUser.membership == false) { %>
+        <ul class="post-list">
+            <% posts.forEach(post=> { %>
+                <li class="post-list-item">
+                    <p>Post title: <%= post.title %>
+                    </p>
+                    <p>Post: <%= post.content %>
+                    </p>
+                </li>
+                <% }); %>
+        </ul>
+        <% } %>
+
 </div>
 
 <%- include("footer"); -%>

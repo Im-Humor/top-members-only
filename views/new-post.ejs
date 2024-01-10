@@ -1,0 +1,20 @@
+<%- include("header"); -%>
+
+    <div class="new-post-container">
+        <h2>Create New Post</h2>
+        <% if (currentUser && currentUser.membership == true) { %>
+        <form action="/new-post" method="post" class="new-post-form">
+            <label for="title">Title:</label>
+            <input type="text" id="title" name="title">
+            <label for="content">Content:</label>
+            <input type="text" id="content" name="content">
+            <button>Submit</button>
+        </form>
+        <% } else if (currentUser && currentUser.membership == false) { %>
+            <p>Please upgrade your membership before creating posts</p>
+        <% } else if (!currentUser) { %>
+            <p>Please login</p>
+        <% } %>
+    </div>
+
+    <%- include("footer"); -%>
